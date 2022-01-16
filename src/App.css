@@ -18,6 +18,12 @@ html, body {
 	border: 1px solid #ACACAC;
 	background-color: #333;
 }
+@media (max-width:767px) {
+	.letterSquare {
+		height: 40px;
+	}
+}
+
 
 .wrong-spot {
 	background-color: goldenrod;
@@ -47,6 +53,22 @@ html, body {
 .keyButton {
 	background-color: #DEDEDE;
 	cursor: pointer;
+	min-width: 1.25rem;
+}
+@media (min-width: 353px) {
+	.keyButton {
+		min-width: 1.35rem;
+	}
+}
+@media (min-width: 420px) {
+	.keyButton {
+		min-width: 1.75rem;
+	}
+}
+@media (max-width: 338px) {
+	.keyButton {
+		min-width: .85rem;
+	}
 }
 .keyButton[data-result="right"] {
 	background-color: green;
