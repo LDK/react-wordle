@@ -54,6 +54,8 @@ html, body {
 	background-color: #DEDEDE;
 	cursor: pointer;
 	min-width: 1.25rem;
+	margin-left: 4px;
+	margin-right: 4px;
 }
 @media (min-width: 353px) {
 	.keyButton {
@@ -63,6 +65,8 @@ html, body {
 @media (min-width: 360px) {
 	.keyButton {
 		min-width: 1.4rem;
+		margin-left: 4px;
+		margin-right: 4px;
 	}
 }
 @media (min-width: 380px) {
@@ -80,9 +84,28 @@ html, body {
 		min-width: 1.75rem;
 	}
 }
+@media (min-width: 460px) {
+	.keyButton {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}
+@media (min-width: 480px) {
+	.keyButton {
+		margin-left: 6px;
+		margin-right: 6px;
+	}
+}
+@media (min-width: 576px) {
+	.keyButton {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}
 @media (max-width: 338px) {
 	.keyButton {
-		min-width: .85rem;
+		margin-left: 3px;
+		margin-right: 3px;
 	}
 }
 .keyButton[data-result="right"] {

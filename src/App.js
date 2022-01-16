@@ -260,7 +260,7 @@ const App = () => {
 				classes = label.className;
 				label = label.label;
 			}
-			myRow.push(<div key={`kbd-key-${keyIdx}`} className={"py-1 px-1 px-sm-2 mx-1 mb-2 keyButton d-inline-block " + classes} data-result={lettersGuessed[label] || 'unguessed'} style={{ color: '#333', border: '#ACACAC', borderRadius: '.25rem' }} onClick={ () => { handleKeyDown(keyVal) } }>{ label }</div>);
+			myRow.push(<div key={`kbd-key-${keyIdx}`} className={"py-1 px-1 px-sm-2 mb-2 keyButton d-inline-block " + classes} data-result={lettersGuessed[label] || 'unguessed'} style={{ color: '#333', border: '#ACACAC', borderRadius: '.25rem' }} onClick={ () => { handleKeyDown(keyVal) } }>{ label }</div>);
 		}
 		keyBtnRows.push(
 			<div key={`kbd-row-${k}`} className="pt-2">{ myRow }</div>
