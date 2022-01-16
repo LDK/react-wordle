@@ -19,11 +19,9 @@ const LetterSquare = (props) => {
 };
 
 const letterMatches = (ltr, word, guess) => {
-	console.log('LM',ltr,word,guess.toUpperCase());
 	let hits = 0;
 	for (let wIdx in word) {
-		console.log('!',wIdx,word[wIdx],guess[wIdx]);
-		if (word[wIdx] == ltr && guess[wIdx] == ltr) {
+		if (word[wIdx] === ltr && guess[wIdx] === ltr) {
 			hits += 1;
 		}
 	}
@@ -40,7 +38,6 @@ const LetterRow = (props) => {
   let wrongsCounted = {};
   const guess = [...guesses].slice(i, i + wordLength);
   const guessWord = guess.join('').toUpperCase();
-  console.log('guess',guess,guessWord,guesses,i);
   while (i <= end) {
     let result = null;
 	const gLtr = guesses[i];
@@ -91,8 +88,7 @@ const getRandomInt = (min, max) => {
 
 const wordLength = 5;
 const guessCount = 6;
-// const picked = answers[getRandomInt(0,answers.length)].split('');
-const picked = "SAILS".split('');
+const picked = answers[getRandomInt(0,answers.length)].split('');
 
 let wordIndex = 0;
 let letterCounts = {};
@@ -155,7 +151,6 @@ const App = () => {
 	if (notificationVisible) { 
 		setNotificationVisible(false); 
 	}
-	console.log('setting guesses',[...guesses, ltr]);
     setGuesses(guesses => [...guesses, ltr]);
   };
   const handleBackSpace = () => {
@@ -205,7 +200,6 @@ const App = () => {
         setResultMessage(<p className="result-message">Sorry, the answer was "{answer.join('')}."  Press Enter for a new word.</p>);
       }
     }
-  console.log('setting guesses',Object.keys(newLettersGuessed).length,newLettersGuessed);
   setLettersGuessed(newLettersGuessed);
 	
     
