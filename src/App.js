@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -95,7 +95,10 @@ const App = () => {
   const [lettersGuessed, setLettersGuessed] = useState({});
   const endOfLine = guesses.length && (guesses.length % wordLength === 0) && guessesUsed < Math.floor(guesses.length / wordLength);
   const startOfLine = !guesses.length || ((guesses.length % wordLength === 0) && guessesUsed >= Math.floor(guesses.length / wordLength));
-  console.log('end?',endOfLine,'start?',startOfLine,'guesses',guesses,'guessesUsed',guessesUsed);
+
+  useEffect(() => {
+  	window.onkeydown=(e) => { handleKeyDown(e.key); };
+  })
 
   const Notification = (props) => {
   	const { timeOut } = props;
@@ -138,11 +141,9 @@ const App = () => {
       let guess = guesses.slice(i, i + wordLength);
 	  let guessWord = guess.join('').toLowerCase();
 	  if (validWords.indexOf(guessWord) === -1) {
-		  console.log('Invalid word',guessWord);
 		  let newGuesses = [...guesses].slice(0,i);
 		  setGuesses(newGuesses);
 		  setGuessesUsed(newGuesses.length / wordLength);
-		  console.log('oi',newGuesses.length / wordLength,guessesUsed);
 		  setNotificationMessage(guessWord.toUpperCase() + " is not a valid word.");
 		  setNotificationVisible(true);
 		  return;
@@ -177,9 +178,6 @@ const App = () => {
         setFailure(true);
         setResultMessage(<p className="result-message">Sorry, the answer was "{answer.join('')}."  Press Enter for a new word.</p>);
       }
-      else {
-        console.log('Incorrect guess',guess.join(),'Guesses used',j);
-      }
     }
     
   };
@@ -190,7 +188,6 @@ const App = () => {
 		return;
     }
     checkVictory();
-	console.log('letters guessed for',answer,lettersGuessed);
   };
   const handleKeyDown = (key) => {
     if (key === 'Enter') {
@@ -247,7 +244,7 @@ const App = () => {
 		)
 	}
   return (
-    <Container fluid="sm" tabIndex={1} onKeyDown={(e) => { handleKeyDown(e.key); }} className="h-100 text-center pt-4 px-0 px-sm-4"> 
+    <Container fluid="sm" tabIndex={1} className="h-100 text-center pt-4 px-0 px-sm-4"> 
 	  <h3 className="mt-md-4 mt-lg-5">A <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> clone built in React</h3>
 	  <p className="mt-2 mb-0">By Daniel Swinney</p>
 	  <a className="d-block mt-0 mb-4 small" href="https://github.com/LDK/react-wordle/">GitHub repo</a>
