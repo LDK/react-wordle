@@ -50,7 +50,7 @@ const LetterRow = (props) => {
         result = 'no-spot';
       }
     }
-    squares.push(<LetterSquare letter={guesses[i]} result={result} active={active === i && !victory} />);
+    squares.push(<LetterSquare key={`guess-${i}`} letter={guesses[i]} result={result} active={active === i && !victory} />);
     i++;
   }  
   return (
@@ -114,7 +114,7 @@ const App = () => {
   let i = 0;
   while (i < guessCount) {
     letterRows.push(
-        <LetterRow rowNum={i} guesses={guesses} answer={answer} wordLength={wordLength} active={guesses.length - (endOfLine ? 1 : 0)} sent={guessesUsed > i} victory={victory} />
+        <LetterRow key={`guess-row-${i}`} rowNum={i} guesses={guesses} answer={answer} wordLength={wordLength} active={guesses.length - (endOfLine ? 1 : 0)} sent={guessesUsed > i} victory={victory} />
     );
     i++;
   }
@@ -148,7 +148,6 @@ const App = () => {
 		  setNotificationVisible(true);
 		  return;
 	  }
-      setGuessesUsed(guessesUsed + 1);
       i += wordLength;
       j++;
 	  for (let guessIdx in guess) {
@@ -169,8 +168,8 @@ const App = () => {
 		 	  newLettersGuessed[gLtr] = 'wrong';
 		  }
 	  }
-	  setLettersGuessed(newLettersGuessed);
-      if (answer.join() === guess.join()) {
+      setGuessesUsed(guessesUsed + 1);
+		  if (answer.join() === guess.join()) {
         setVictory(true);
         setResultMessage(<p className="result-message">You got the answer in {guessesUsed + 1} tries!  Press Enter for a new word.</p>);
       }
@@ -179,6 +178,9 @@ const App = () => {
         setResultMessage(<p className="result-message">Sorry, the answer was "{answer.join('')}."  Press Enter for a new word.</p>);
       }
     }
+  console.log('setting guesses',Object.keys(newLettersGuessed).length,newLettersGuessed);
+  setLettersGuessed(newLettersGuessed);
+	
     
   };
   const handleEnter = () => {
@@ -237,10 +239,10 @@ const App = () => {
 				classes = label.className;
 				label = label.label;
 			}
-			myRow.push(<div className={"py-1 px-1 px-sm-2 mx-1 mb-2 keyButton d-inline-block " + classes} data-result={lettersGuessed[label] || 'unguessed'} style={{ color: '#333', border: '#ACACAC', borderRadius: '.25rem' }} onClick={ () => { handleKeyDown(keyVal) } }>{ label }</div>);
+			myRow.push(<div key={`kbd-key-${keyIdx}`} className={"py-1 px-1 px-sm-2 mx-1 mb-2 keyButton d-inline-block " + classes} data-result={lettersGuessed[label] || 'unguessed'} style={{ color: '#333', border: '#ACACAC', borderRadius: '.25rem' }} onClick={ () => { handleKeyDown(keyVal) } }>{ label }</div>);
 		}
 		keyBtnRows.push(
-			<div className="pt-2">{ myRow }</div>
+			<div key={`kbd-row-${k}`} className="pt-2">{ myRow }</div>
 		)
 	}
   return (
