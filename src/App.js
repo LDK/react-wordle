@@ -18,6 +18,18 @@ const LetterSquare = (props) => {
   );
 };
 
+const letterMatches = (ltr, word, guess) => {
+	console.log('LM',ltr,word,guess.toUpperCase());
+	let hits = 0;
+	for (let wIdx in word) {
+		console.log('!',wIdx,word[wIdx],guess[wIdx]);
+		if (word[wIdx] == ltr && guess[wIdx] == ltr) {
+			hits += 1;
+		}
+	}
+	return hits;
+}
+
 const LetterRow = (props) => {
   const { rowNum, guesses, answer, wordLength, active, sent, victory } = props;
   let offset = rowNum * wordLength;
@@ -25,6 +37,10 @@ const LetterRow = (props) => {
   let squares = [];
   let i = offset;
   let lettersSeen = {};
+  let wrongsCounted = {};
+  const guess = [...guesses].slice(i, i + wordLength);
+  const guessWord = guess.join('').toUpperCase();
+  console.log('guess',guess,guessWord,guesses,i);
   while (i <= end) {
     let result = null;
 	const gLtr = guesses[i];
@@ -39,11 +55,18 @@ const LetterRow = (props) => {
 		  result = 'right-spot';
       }
       else if (answer.indexOf(gLtr) !== -1) {
-		  if (lettersSeen[gLtr] > letterCounts[gLtr]) {
+	  	const instances = instancesOf(gLtr,answer);
+		const ltrRight = letterMatches(gLtr,answer,guessWord.toUpperCase());
+	  	const ltrWrongs = instances - ltrRight;
+		if (!wrongsCounted[gLtr]) {
+			wrongsCounted[gLtr] = 0;
+		}
+		  if (wrongsCounted[gLtr] >= ltrWrongs) {
 			  result = 'no-spot';
 		  }
 		  else {
 			  result = 'wrong-spot';
+			  wrongsCounted[gLtr] += 1;
 		  }
       }
       else {
@@ -52,7 +75,7 @@ const LetterRow = (props) => {
     }
     squares.push(<LetterSquare key={`guess-${i}`} letter={guesses[i]} result={result} active={active === i && !victory} />);
     i++;
-  }  
+  }
   return (
     <Row>
     { squares }
@@ -68,7 +91,8 @@ const getRandomInt = (min, max) => {
 
 const wordLength = 5;
 const guessCount = 6;
-const picked = answers[getRandomInt(0,answers.length)].split('');
+// const picked = answers[getRandomInt(0,answers.length)].split('');
+const picked = "SAILS".split('');
 
 let wordIndex = 0;
 let letterCounts = {};
@@ -82,6 +106,15 @@ while (wordIndex < wordLength) {
 	}
 	wordIndex++;
 }
+
+const instancesOf = (needle, haystack) => {
+	if (typeof haystack == 'object') {
+		haystack = haystack.join('');
+	}
+	const regex = new RegExp( needle, 'g' );
+	const result = haystack.match(regex)
+	return result ? result.length : 0;
+};
 
 const App = () => {
   const [answer, setAnswer] = useState(picked);
@@ -122,6 +155,7 @@ const App = () => {
 	if (notificationVisible) { 
 		setNotificationVisible(false); 
 	}
+	console.log('setting guesses',[...guesses, ltr]);
     setGuesses(guesses => [...guesses, ltr]);
   };
   const handleBackSpace = () => {
@@ -136,9 +170,8 @@ const App = () => {
     let i = 0;
     let j = 0;
 	let newLettersGuessed = {};
-	let lettersSeen = {};
     while (i < guesses.length) {
-      let guess = guesses.slice(i, i + wordLength);
+      let guess = [...guesses].slice(i, i + wordLength);
 	  let guessWord = guess.join('').toLowerCase();
 	  if (validWords.indexOf(guessWord) === -1) {
 		  let newGuesses = [...guesses].slice(0,i);
@@ -152,12 +185,6 @@ const App = () => {
       j++;
 	  for (let guessIdx in guess) {
 		  let gLtr = guess[guessIdx];
-		  if (!lettersSeen[gLtr]) {
-			  lettersSeen[gLtr] = 1;
-		  }
-		  else {
-			  lettersSeen[gLtr]++;
-		  }
 		  if (answer.indexOf(gLtr) === -1) {
 			  newLettersGuessed[gLtr] = 'none';
 		  }
