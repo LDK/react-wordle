@@ -60,6 +60,21 @@ html, body {
 		min-width: 1.35rem;
 	}
 }
+@media (min-width: 360px) {
+	.keyButton {
+		min-width: 1.4rem;
+	}
+}
+@media (min-width: 380px) {
+	.keyButton {
+		min-width: 1.5rem;
+	}
+}
+@media (min-width: 400px) {
+	.keyButton {
+		min-width: 1.625rem;
+	}
+}
 @media (min-width: 420px) {
 	.keyButton {
 		min-width: 1.75rem;

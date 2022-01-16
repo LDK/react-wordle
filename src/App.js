@@ -193,11 +193,11 @@ const App = () => {
       setGuessesUsed(guessesUsed + 1);
 		  if (answer.join() === guess.join()) {
         setVictory(true);
-        setResultMessage(<p className="result-message">You got the answer in {guessesUsed + 1} tries!  Press Enter for a new word.</p>);
+        setResultMessage(<p className="result-message pt-2 pb-3">You got the answer in {guessesUsed + 1} tries!  Press Enter for a new word.</p>);
       }
       else if (j >= guessCount) {
         setFailure(true);
-        setResultMessage(<p className="result-message">Sorry, the answer was "{answer.join('')}."  Press Enter for a new word.</p>);
+        setResultMessage(<p className="result-message pt-2 pb-3">Sorry, the answer was "{answer.join('')}."  Press Enter for a new word.</p>);
       }
     }
   setLettersGuessed(newLettersGuessed);
@@ -270,7 +270,7 @@ const App = () => {
     <Container fluid="sm" tabIndex={1} className="h-100 text-center pt-2 pt-md-3 pt-lg-4 px-0 px-sm-4"> 
 	  <h3 className="mt-md-4 mt-lg-5">A <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> clone built in React</h3>
 	  <p className="mt-1 mt-md-2 mb-0">By Daniel Swinney</p>
-	  <a className="d-block mt-0 mb-4 small" href="https://github.com/LDK/react-wordle/">GitHub repo</a>
+	  <a className="d-block mt-0 mb-3 mb-md-4 small" href="https://github.com/LDK/react-wordle/">GitHub repo</a>
 	    <Container className="App" style={{ maxWidth: '480px', backgroundColor: '#003300' }}>
 	        <Row>
 	        <Col xs={12}>
