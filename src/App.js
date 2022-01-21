@@ -177,7 +177,6 @@ const App = () => {
 	};
 	const addWordSeen = (word) => {
 		const list = cookies.get('wordleCloneWordsSeen');
-		console.log('list',list);
 		let newList = list ? [...list, word] : [word];
 		cookies.set('wordleCloneWordsSeen',newList);
 	}
