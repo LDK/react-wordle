@@ -95,7 +95,7 @@ const getRandomInt = (min, max) => {
 
 const wordLength = 5;
 const guessCount = 6;
-let wordsSeen = cookies.get('wordleCloneWordsSeen');
+let wordsSeen = cookies.get('wordleCloneWordsSeen') || [];
 let wordChoice = answers[getRandomInt(0,answers.length)].split('');
 
 // If they haven't seen every word and we've picked a word they've already seen, pick until we get an unseen word.
