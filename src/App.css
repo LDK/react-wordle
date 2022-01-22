@@ -165,7 +165,7 @@ html, body {
 
 .stats {
 	background: white;
-	padding: .5rem;
+	padding: .5rem 0;
 }
 nav {
 	position: fixed;
@@ -195,4 +195,72 @@ nav {
 }
 .modal-header span {
 	font-weight: 600;
+}
+
+.distribution-bar {
+	height: 28px;
+    position: relative;
+    top: 1px;
+	left: calc(1px);
+	padding-left: 4px;
+	font-weight: 600;
+	max-width: calc(100% - 2rem);
+}
+.distribution-bar span {
+	position: absolute;
+	left: .5rem;
+}
+.distribution-bar-tray {
+	height: 30px;
+	background: #999;
+	width: 100%;
+	margin-bottom: .5rem;
+	position: relative;
+	left: 1.5rem;
+	max-width: calc(100% - 3rem);
+}
+
+.distribution-1 {
+	background-color: #00ff00;
+}
+.distribution-2 {
+	background-color: #91df00;
+}
+.distribution-3 {
+	background-color: #c4ba00;
+}
+.distribution-4 {
+	background-color: #e59100;
+}
+.distribution-5 {
+	background-color: #f96000;
+}
+.distribution-6 {
+	background-color: #ff0000;
+}
+.distribution-bar-tray::before {
+	display: inline-block;
+	position: absolute;
+	left: -1.5rem;
+	color: black;
+	font-weight: 600;
+	top: 1px;
+}
+.distribution-bar-tray[rel="1"]::before {
+	content: '1: ';
+}
+.distribution-bar-tray[rel="2"]::before {
+	content: '2: ';
+}
+.distribution-bar-tray[rel="3"]::before {
+	content: '3: ';
+}
+.distribution-bar-tray[rel="4"]::before {
+	content: '4: ';
+}
+.distribution-bar-tray[rel="5"]::before {
+	content: '5: ';
+}
+.distribution-bar-tray[rel="6"]::before {
+	content: '6: ';
 }
