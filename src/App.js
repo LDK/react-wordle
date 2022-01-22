@@ -7,6 +7,9 @@ import Container from 'react-bootstrap/Container';
 import validWords from "./validWords.json";
 import answers from "./answers.json";
 import Cookies from 'universal-cookie';
+import { CSSTransition } from 'react-transition-group';
+import { ReactComponent as StatsIcon } from './svg/graph.svg';
+import { ReactComponent as HelpIcon } from './svg/help.svg';
 
 const cookies = new Cookies();
 
@@ -100,7 +103,7 @@ let wordChoice = answers[getRandomInt(0,answers.length)].split('');
 
 // If they haven't seen every word and we've picked a word they've already seen, pick until we get an unseen word.
 while (wordsSeen.length < answers.length && wordsSeen.indexOf(wordChoice) !== -1) {
-	let wordChoice = answers[getRandomInt(0,answers.length)].split('');
+	wordChoice = answers[getRandomInt(0,answers.length)].split('');
 }
 const picked = wordChoice;
 
@@ -132,6 +135,8 @@ const App = () => {
 	const [guessesUsed, setGuessesUsed] = useState(0);
 	const [victory, setVictory] = useState(false);
 	const [failure, setFailure] = useState(false);
+	const [statsVisible, setStatsVisible] = useState(false);
+	const [helpVisible, setHelpVisible] = useState(false);
 	const [notificationVisible, setNotificationVisible] = useState(false);
 	const [notificationMessage, setNotificationMessage] = useState(false);
 	const [resultMessage, setResultMessage] = useState(null);
@@ -149,7 +154,7 @@ const App = () => {
 			setTimeout(() => { if (notificationVisible) { setNotificationVisible(false); } }, timeOut);
 		}
 		return (
-			<div className={ "notification " + (notificationVisible ? 'opacity-100' : 'opacity-0') }>{ notificationMessage }</div>
+			<span>{ notificationMessage }</span>
 		);
 	}
 
@@ -175,11 +180,58 @@ const App = () => {
 		newInput.pop();
 		setGuesses(newInput);
 	};
-	const addWordSeen = (word) => {
+	const defaultScores = {
+		words: 0,
+		success: 0,
+		guesses: 0,
+		average: null,
+		1: 0,
+		2: 0,
+		3: 0,
+		4: 0,
+		5: 0,
+		6: 0
+	};
+	const addWordSeen = (word, success) => {
 		const list = cookies.get('wordleCloneWordsSeen');
 		let newList = list ? [...list, word] : [word];
 		cookies.set('wordleCloneWordsSeen',newList);
+		const scores = cookies.get('wordleCloneScores') || defaultScores;
+		let newScores = {};
+		newScores.words = scores.words + 1;
+		newScores.guesses = scores.guesses + guessesUsed + 1;
+		newScores.average = Math.round(newScores.guesses / newScores.words);
+		let i = 1;
+		while (i < 7) {
+			if (i === guessesUsed + 1) {
+				newScores[i] = scores[i] + 1;
+			}
+			else {
+				newScores[i] = scores[i];
+			}
+			i++;
+		}
+		newScores.success = scores.success + (success ? 1 : 0);
+		cookies.set('wordleCloneScores',newScores);
 	}
+	const ScoreBoard = (props) => {
+		const scores = cookies.get('wordleCloneScores') || defaultScores;
+		return (
+			<div className="scoreboard">
+				<p>Words Seen: { scores.words }</p>
+				<p>Successful Guesses: { scores.success }</p>
+				<p>Total Guesses: { scores.guesses }</p>
+				<p>Average Guesses Needed: { scores.average }</p>
+				<h4>Guess Distribution</h4>
+				<p>1: { scores[1] }</p>
+				<p>2: { scores[2] }</p>
+				<p>3: { scores[3] }</p>
+				<p>4: { scores[4] }</p>
+				<p>5: { scores[5] }</p>
+				<p>6: { scores[6] }</p>
+			</div>
+		);
+	};
 	const checkVictory = () => {
 		let i = 0;
 		let j = 0;
@@ -213,12 +265,12 @@ const App = () => {
 			if (answer.join() === guess.join()) {
 				setVictory(true);
 				setResultMessage(<p className="result-message pt-2 pb-3">You got the answer in {guessesUsed + 1} tries!  Press Enter for a new word.</p>);
-				addWordSeen(answer.join(''));
+				addWordSeen(answer.join(''),true);
 			}
 			else if (j >= guessCount) {
 				setFailure(true);
 				setResultMessage(<p className="result-message pt-2 pb-3">Sorry, the answer was "{answer.join('')}."  Press Enter for a new word.</p>);
-				addWordSeen(answer.join(''));
+				addWordSeen(answer.join(''),false);
 			}
 		}
 		setLettersGuessed(newLettersGuessed);
@@ -287,6 +339,10 @@ const App = () => {
 	}
 	return (
 		<Container fluid="sm" tabIndex={1} className="h-100 text-center pt-2 pt-md-3 pt-lg-4 px-0 px-sm-4"> 
+			<nav>
+				<a className="button-icon" onClick={() => { setStatsVisible(!statsVisible); }}><StatsIcon /></a>
+				<a className="button-icon" onClick={() => { setHelpVisible(!helpVisible); }}><HelpIcon /></a>
+			</nav>
 			<header className="d-sm-none d-md-block">
 				<h3 className="mt-md-4 mt-lg-5">A <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> clone built in React</h3>
 				<p className="mt-1 mt-md-2 mb-0">By Daniel Swinney</p>
@@ -301,7 +357,11 @@ const App = () => {
 				<Row className="onscreenKeyboard">
 					{ keyBtnRows }
 				</Row>
-				<Notification timeOut={2500} />
+				<CSSTransition in={notificationVisible} timeout={300} classNames="notification">
+					<div className="notification">
+						<Notification timeOut={1500} />
+					</div>
+				</CSSTransition>
 				{ resultMessage &&
 				<Row>
 					<Col xs={12} className="p-0">
@@ -309,6 +369,11 @@ const App = () => {
 					</Col>
 				</Row>
 				}
+			<CSSTransition in={statsVisible} timeout={300} classNames="stats">
+				<div className="stats">
+					<ScoreBoard />
+				</div>
+			</CSSTransition>
 			</Container>
 		</Container>
 	);
