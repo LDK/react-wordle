@@ -8,6 +8,7 @@ import validWords from "./validWords.json";
 import answers from "./answers.json";
 import Cookies from 'universal-cookie';
 import Modal from 'react-bootstrap/Modal';
+import ScoreBoard from './ScoreBoard.js';
 import { CSSTransition } from 'react-transition-group';
 import { ReactComponent as StatsIcon } from './svg/graph.svg';
 import { ReactComponent as HelpIcon } from './svg/help.svg';
@@ -215,49 +216,7 @@ const App = () => {
 		newScores.success = scores.success + (success ? 1 : 0);
 		cookies.set('wordleCloneScores',newScores);
 	}
-	const ScoreBoard = (props) => {
-		const scores = cookies.get('wordleCloneScores') || defaultScores;
-		const Distribution = () => {
-			let scale = 0;
-			let i = 1;
-			while (i < 7) {
-				if (i > scale) {
-					scale = i;
-				}
-				i++;
-			}
-			let percentages = {};
-			let bars = [];
-			i = 1;
-			while (i < 7) {
-				percentages[i] = Math.round((scores[i] * 10 / scale) * 100) / 10;
-				bars.push(
-					<div className="distribution-bar-tray" rel={i}>
-						<div className={`distribution-bar distribution-${i}`} style={{ width: `${percentages[i]}%` }}>
-							<span>{ scores[i] }</span>
-						</div>
-					</div>
-				);
-				i++;
-			}
-			console.log('percentages',percentages);
-			console.log('scores',scores);
-			console.log('scale',scale);
-			return (
-				<div classname="distribution">
-					{ bars}
-				</div>
-			);
-		}
-		return (
-			<div className="scoreboard">
-				<p>Words Seen: { scores.words } ({ scores.success } Wins)</p>
-				<p>Average Guesses Needed: { scores.average }</p>
-				<h4>Guess Distribution</h4>
-				<Distribution />
-			</div>
-		);
-	};
+
 	const checkVictory = () => {
 		let i = 0;
 		let j = 0;
@@ -407,12 +366,12 @@ const App = () => {
 				centered
 				size="auto"
 				>
-				  <Modal.Header closeButton underline={false}>
+				  <Modal.Header closeButton>
 					<span>Your Stats</span>
 				  </Modal.Header>
 				  <Modal.Body>
 					<div className="stats">
-						<ScoreBoard />
+						<ScoreBoard cookies={cookies} defaultScores={defaultScores} />
 					</div>
 				  </Modal.Body>
 			</Modal>

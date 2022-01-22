@@ -204,7 +204,6 @@ nav {
 	left: calc(1px);
 	padding-left: 4px;
 	font-weight: 600;
-	max-width: calc(100% - 2rem);
 }
 .distribution-bar span {
 	position: absolute;
