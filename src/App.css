@@ -124,7 +124,7 @@ html, body {
 	opacity: .9;
 }
 .notification {
-	background: rgb(222,222,222,.9);
+	background: rgb(222,222,222,1);
 	color: #633;
 	opacity: 0;
 	transition: opacity .3s;
@@ -164,33 +164,8 @@ html, body {
 
 
 .stats {
-	position: fixed;
-	top: 3rem;
-	right: 0;
 	background: white;
 	padding: .5rem;
-	opacity: 0;
-}
-.stats-enter {
-  opacity: 0;
-}
-.stats-enter-active {
-  opacity: 1;
-  transition: opacity 300ms;
-}
-.stats-enter-done {
-  opacity: 1;
-  transition: opacity 300ms;
-}
-.stats-exit {
-  opacity: 1;
-}
-.stats-exit-active {
-  opacity: 0;
-  transition: opacity 300ms;
-}
-.stats-exit-done {
-  opacity: 0;
 }
 nav {
 	position: fixed;
@@ -217,4 +192,7 @@ nav {
 }
 .button-icon:hover svg {
 	color: white;
+}
+.modal-header span {
+	font-weight: 600;
 }

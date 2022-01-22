@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import validWords from "./validWords.json";
 import answers from "./answers.json";
 import Cookies from 'universal-cookie';
+import Modal from 'react-bootstrap/Modal';
 import { CSSTransition } from 'react-transition-group';
 import { ReactComponent as StatsIcon } from './svg/graph.svg';
 import { ReactComponent as HelpIcon } from './svg/help.svg';
@@ -218,9 +219,7 @@ const App = () => {
 		const scores = cookies.get('wordleCloneScores') || defaultScores;
 		return (
 			<div className="scoreboard">
-				<p>Words Seen: { scores.words }</p>
-				<p>Successful Guesses: { scores.success }</p>
-				<p>Total Guesses: { scores.guesses }</p>
+				<p>Words Seen: { scores.words } ({ scores.success } Wins)</p>
 				<p>Average Guesses Needed: { scores.average }</p>
 				<h4>Guess Distribution</h4>
 				<p>1: { scores[1] }</p>
@@ -284,6 +283,9 @@ const App = () => {
 		checkVictory();
 	};
 	const handleKeyDown = (key) => {
+		if (statsVisible) {
+			return;
+		}
 		if (key === 'Enter') {
 			if (victory || failure) {
 				newGame();
@@ -340,8 +342,8 @@ const App = () => {
 	return (
 		<Container fluid="sm" tabIndex={1} className="h-100 text-center pt-2 pt-md-3 pt-lg-4 px-0 px-sm-4"> 
 			<nav>
-				<a className="button-icon" onClick={() => { setStatsVisible(!statsVisible); }}><StatsIcon /></a>
-				<a className="button-icon" onClick={() => { setHelpVisible(!helpVisible); }}><HelpIcon /></a>
+				<span className="button-icon" onClick={() => { setStatsVisible(!statsVisible); }}><StatsIcon /></span>
+				<span className="button-icon" onClick={() => { setHelpVisible(!helpVisible); }}><HelpIcon /></span>
 			</nav>
 			<header className="d-sm-none d-md-block">
 				<h3 className="mt-md-4 mt-lg-5">A <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> clone built in React</h3>
@@ -369,12 +371,24 @@ const App = () => {
 					</Col>
 				</Row>
 				}
-			<CSSTransition in={statsVisible} timeout={300} classNames="stats">
-				<div className="stats">
-					<ScoreBoard />
-				</div>
-			</CSSTransition>
 			</Container>
+			<Modal
+				keyboard={true}
+				backdrop={true}
+				show={statsVisible}
+				onHide={() => { setStatsVisible(false) }}
+				centered
+				size="auto"
+				>
+				  <Modal.Header closeButton underline={false}>
+					<span>Your Stats</span>
+				  </Modal.Header>
+				  <Modal.Body>
+					<div className="stats">
+						<ScoreBoard />
+					</div>
+				  </Modal.Body>
+			</Modal>
 		</Container>
 	);
 }
