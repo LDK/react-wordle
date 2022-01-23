@@ -27,9 +27,9 @@ const ResultMessage = (props) => {
 			centered
 			size="auto"
 		>
-			{ !isMobile && <Modal.Header closeButton /> }
+			{ !isMobile && <Modal.Header closeButton closeVariant="white" /> }
 			<Modal.Body>
-				<p className="result-message px-2 py-4 text-center fw-600 m-0">
+				<p className="result-message px-2 pb-4 text-center fw-600 m-0">
 					{ resultMessage }
 					{ isMobile && <Button onClick={newGame} variant="primary">New Word</Button> }
 				</p>

@@ -6,6 +6,7 @@ import validWords from "./validWords.json";
 import answers from "./answers.json";
 import Cookies from 'universal-cookie';
 import StatsBox from './StatsBox.js';
+import Help from './Help.js';
 import ResultMessage from './ResultMessage.js';
 import GameBoard from './GameBoard.js';
 import Notification from './Notification.js';
@@ -238,6 +239,10 @@ const App = () => {
 				setStatsVisible={setStatsVisible}
 				cookies={cookies}
 				defaultScores={defaultScores}
+				/>
+			<Help 
+				helpVisible={helpVisible}
+				setHelpVisible={setHelpVisible}
 				/>
 		</Container>
 	);

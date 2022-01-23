@@ -177,20 +177,39 @@ body {
 			left: calc(50% - 150px);
 			font-weight: 600;
 		}
-		.result-modal {
-			&.victory {
+	}
+	.result-modal {
+		&.victory {
+			.modal-content {
 				background: green;
 			}
-			&.failure {
+		}
+		&.failure {
+			.modal-content {
 				background: maroon;
 			}
-			p {
-				color: white;
-			}
 		}
-		.modal-header span {
+		p, span {
+			color: white;
+		}
+		.result-message {
 			font-weight: 600;
 		}
+		.modal-header {
+			border: none;
+			.btn-close {
+				color: white;
+				opacity: 1;
+			}
+			svg {
+				* {
+					fill: white;
+				}
+			}
+		}
+	}
+	.modal-header span {
+		font-weight: 600;
 	}
 	.stats {
 		background: white;
