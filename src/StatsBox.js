@@ -45,6 +45,7 @@ const StatsBox = (props) => {
 	const { statsVisible, setStatsVisible, cookies, defaultScores } = props;
 	return (
 		<Modal
+			className="stats-modal"
 			keyboard={true}
 			backdrop={true}
 			show={statsVisible}

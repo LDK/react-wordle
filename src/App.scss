@@ -177,14 +177,16 @@ body {
 			left: calc(50% - 150px);
 			font-weight: 600;
 		}
-		.result-message {
-			width: 100%;
-			padding: 1rem;
-			text-align: center;
-			background: maroon;
-			margin: 0;
-			font-weight: 600;
-			color: white;
+		.result-modal {
+			&.victory {
+				background: green;
+			}
+			&.failure {
+				background: maroon;
+			}
+			p {
+				color: white;
+			}
 		}
 		.modal-header span {
 			font-weight: 600;

@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 import React, { useState, useEffect } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import validWords from "./validWords.json";
 import answers from "./answers.json";
 import Cookies from 'universal-cookie';
 import StatsBox from './StatsBox.js';
+import ResultMessage from './ResultMessage.js';
 import GameBoard from './GameBoard.js';
 import Notification from './Notification.js';
 import ScreenKeyboard from './ScreenKeyboard.js';
@@ -52,14 +51,13 @@ const App = () => {
 	const [answer, setAnswer] = useState(picked);
 	const [guesses, setGuesses] = useState([]);
 	const [guessesUsed, setGuessesUsed] = useState(0);
-	const [victory, setVictory] = useState(false);
-	const [failure, setFailure] = useState(false);
+	const [result, setResult] = useState(null);
 	const [statsVisible, setStatsVisible] = useState(false);
 	const [helpVisible, setHelpVisible] = useState(false);
 	const [notificationVisible, setNotificationVisible] = useState(false);
 	const [notificationMessage, setNotificationMessage] = useState(false);
-	const [resultMessage, setResultMessage] = useState(null);
 	const [lettersGuessed, setLettersGuessed] = useState({});
+	const [resultsClosed, setResultsClosed] = useState(false);
 	const endOfLine = guesses.length && (guesses.length % wordLength === 0) && guessesUsed < Math.floor(guesses.length / wordLength);
 	const startOfLine = !guesses.length || ((guesses.length % wordLength === 0) && guessesUsed >= Math.floor(guesses.length / wordLength));
 	const handleLetter = (ltr) => {
@@ -74,7 +72,7 @@ const App = () => {
 			setNotificationVisible(true);
 			return;
 		}
-		checkVictory();
+		checkResult();
 	};
 	const handleBackSpace = () => {
 		if (startOfLine) {
@@ -118,7 +116,7 @@ const App = () => {
 		newScores.success = scores.success + (success ? 1 : 0);
 		cookies.set('wordleCloneScores',newScores);
 	}
-	const checkVictory = () => {
+	const checkResult = () => {
 		let i = 0;
 		let j = 0;
 		let newLettersGuessed = {};
@@ -149,13 +147,11 @@ const App = () => {
 			}
 			setGuessesUsed(guessesUsed + 1);
 			if (answer.join() === guess.join()) {
-				setVictory(true);
-				setResultMessage(<p className="result-message pt-2 pb-3">You got the answer in {guessesUsed + 1} tries!  Press Enter for a new word.</p>);
+				setResult('victory');
 				addWordSeen(answer.join(''),true);
 			}
 			else if (j >= guessCount) {
-				setFailure(true);
-				setResultMessage(<p className="result-message pt-2 pb-3">Sorry, the answer was "{answer.join('')}."  Press Enter for a new word.</p>);
+				setResult('failure');
 				addWordSeen(answer.join(''),false);
 			}
 		}
@@ -166,14 +162,14 @@ const App = () => {
 			return;
 		}
 		if (key === 'Enter') {
-			if (victory || failure) {
+			if (result) {
 				newGame();
 				return;
 			}
 			handleEnter();
 			return;
 		}
-		if (victory) {
+		if (result) {
 			return;
 		}
 		const isLetter = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(key) !== -1;
@@ -187,12 +183,11 @@ const App = () => {
 		}
 	};
 	const newGame = () => {
-		setVictory(false);
-		setFailure(false);
+		setResult(null);
+		setResultsClosed(false);
 		setGuesses([]);
 		setGuessesUsed(0);
 		setAnswer(answers[getRandomInt(0,answers.length)].split(''));
-		setResultMessage(null);
 		setLettersGuessed({});
 	};
 	useEffect(() => {
@@ -217,7 +212,7 @@ const App = () => {
 					wordLength={wordLength}
 					endOfLine={endOfLine}
 					guessesUsed={guessesUsed}
-					victory={victory}
+					result={result}
 				/>
 				<ScreenKeyboard 
 					handleKeyDown={handleKeyDown} 
@@ -229,13 +224,14 @@ const App = () => {
 					notificationMessage={notificationMessage}
 					setNotificationVisible={setNotificationVisible} 
 				/>
-				{ resultMessage &&
-				<Row>
-					<Col xs={12} className="p-0">
-						{ resultMessage }
-					</Col>
-				</Row>
-				}
+				<ResultMessage
+					result={result}
+					newGame={newGame}
+					guessesUsed={guessesUsed}
+					answer={answer}
+					resultsClosed={resultsClosed}
+					setResultsClosed={setResultsClosed}
+				/>
 			</Container>
 			<StatsBox 
 				statsVisible={statsVisible}
