@@ -92,7 +92,7 @@ body {
 			@include media-breakpoint-down(md) {
 				height: 40px;
 				@include media-breakpoint-up(sm) {
-					height: 38px;
+					height: 30px;
 				}
 			}
 			&.wrong-spot {
