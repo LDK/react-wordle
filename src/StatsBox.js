@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-bootstrap/Modal';
 const ScoreBoard = (props) => {
 	const { cookies, defaultScores } = props;
 	const scores = cookies.get('wordleCloneScores') || defaultScores;
@@ -7,7 +8,7 @@ const ScoreBoard = (props) => {
 		let i = 1;
 		while (i < 7) {
 			if (scores[i] > scale) {
-				scale = i;
+				scale = scores[i];
 			}
 			i++;
 		}
@@ -26,7 +27,7 @@ const ScoreBoard = (props) => {
 			i++;
 		}
 		return (
-			<div className="distribution">
+			<div className="distribution" data-scale={scale}>
 				{ bars }
 			</div>
 		);
@@ -40,4 +41,26 @@ const ScoreBoard = (props) => {
 		</div>
 	);
 };
-export default ScoreBoard;
+const StatsBox = (props) => {
+	const { statsVisible, setStatsVisible, cookies, defaultScores } = props;
+	return (
+		<Modal
+			keyboard={true}
+			backdrop={true}
+			show={statsVisible}
+			onHide={() => { setStatsVisible(false) }}
+			centered
+			size="auto"
+			>
+			  <Modal.Header closeButton>
+				<span>Your Stats</span>
+			  </Modal.Header>
+			  <Modal.Body>
+				<div className="stats">
+					<ScoreBoard cookies={cookies} defaultScores={defaultScores} />
+				</div>
+			  </Modal.Body>
+		</Modal>
+	);
+};
+export default StatsBox;
