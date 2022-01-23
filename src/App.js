@@ -217,7 +217,8 @@ const App = () => {
 				/>
 				<ScreenKeyboard 
 					handleKeyDown={handleKeyDown} 
-					lettersGuessed={lettersGuessed} 
+					lettersGuessed={lettersGuessed}
+					result={result}
 				/>
 				<Notification 
 					timeOut={1500} 

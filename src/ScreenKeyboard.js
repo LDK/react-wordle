@@ -1,11 +1,11 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 const ScreenKeyboard = (props) => {
-	const { handleKeyDown, lettersGuessed } = props;
+	const { handleKeyDown, lettersGuessed, result } = props;
 	const keyRows = [
 		['Q','W','E','R','T','Y','U','I','O','P',{ key: 'Backspace', label: '← Bk', className: 'd-none d-sm-inline-block actionKey' },{ key: 'Backspace', label: '←', className: 'd-sm-none actionKey' }],
 		['A','S','D','F','G','H','J','K','L'],
-		['Z','X','C','V','B','N','M',{ key: 'Enter', label: 'Enter ⏎', className: 'd-none d-sm-inline-block actionKey' },{ key: 'Enter', label: '⏎', className: 'd-sm-none actionKey' }]
+		['Z','X','C','V','B','N','M',{ key: 'Enter', label: 'Enter ⏎', className: 'd-none d-sm-inline-block actionKey' + (result ? ' attention' : '') },{ key: 'Enter', label: '⏎', className: 'd-sm-none actionKey' }]
 	];
 	let keyBtnRows = [];
 	for (var k in keyRows) {
