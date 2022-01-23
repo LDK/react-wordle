@@ -9,8 +9,8 @@ import answers from "./answers.json";
 import Cookies from 'universal-cookie';
 import StatsBox from './StatsBox.js';
 import GameBoard from './GameBoard.js';
+import Notification from './Notification.js';
 import ScreenKeyboard from './ScreenKeyboard.js';
-import { CSSTransition } from 'react-transition-group';
 import { ReactComponent as StatsIcon } from './svg/graph.svg';
 import { ReactComponent as HelpIcon } from './svg/help.svg';
 
@@ -62,15 +62,6 @@ const App = () => {
 	const [lettersGuessed, setLettersGuessed] = useState({});
 	const endOfLine = guesses.length && (guesses.length % wordLength === 0) && guessesUsed < Math.floor(guesses.length / wordLength);
 	const startOfLine = !guesses.length || ((guesses.length % wordLength === 0) && guessesUsed >= Math.floor(guesses.length / wordLength));
-	const Notification = (props) => {
-		const { timeOut } = props;
-		if (notificationVisible) {
-			setTimeout(() => { if (notificationVisible) { setNotificationVisible(false); } }, timeOut);
-		}
-		return (
-			<span>{ notificationMessage }</span>
-		);
-	}
 	const handleLetter = (ltr) => {
 		if (notificationVisible) { 
 			setNotificationVisible(false); 
@@ -204,18 +195,17 @@ const App = () => {
 		setResultMessage(null);
 		setLettersGuessed({});
 	};
-	const nodeRef = React.useRef(null);
 	useEffect(() => {
 		window.onkeydown=(e) => { handleKeyDown(e.key); };
 	});
 	return (
-		<Container fluid="sm" tabIndex={1} className="h-100 text-center pt-2 pt-md-5 pt-lg-4 px-0 px-sm-4"> 
+		<Container fluid="sm" tabIndex={1} className="h-100 text-center pt-2 pt-sm-5 pt-lg-4 px-0 px-sm-4"> 
 			<nav>
 				<span className="button-icon" onClick={() => { setStatsVisible(!statsVisible); }}><StatsIcon /></span>
 				<span className="button-icon" onClick={() => { setHelpVisible(!helpVisible); }}><HelpIcon /></span>
 			</nav>
 			<header className="d-sm-none d-md-block">
-				<h3 className="mt-md-4 mt-lg-5">A <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> clone built in React</h3>
+				<h3 className="mt-5 mt-md-4 mt-lg-5">A <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> clone built in React</h3>
 				<p className="mt-1 mt-md-2 mb-0">By Daniel Swinney</p>
 				<a className="d-block mt-0 mb-3 mb-md-4 small" href="https://github.com/LDK/react-wordle/">GitHub repo</a>
 			</header>
@@ -229,12 +219,16 @@ const App = () => {
 					guessesUsed={guessesUsed}
 					victory={victory}
 				/>
-				<ScreenKeyboard handleKeyDown={handleKeyDown} lettersGuessed={lettersGuessed} />
-				<CSSTransition in={notificationVisible} timeout={300} classNames="notification" nodeRef={nodeRef}>
-					<div className="notification" ref={nodeRef}>
-						<Notification timeOut={1500} />
-					</div>
-				</CSSTransition>
+				<ScreenKeyboard 
+					handleKeyDown={handleKeyDown} 
+					lettersGuessed={lettersGuessed} 
+				/>
+				<Notification 
+					timeOut={1500} 
+					notificationVisible={notificationVisible}
+					notificationMessage={notificationMessage}
+					setNotificationVisible={setNotificationVisible} 
+				/>
 				{ resultMessage &&
 				<Row>
 					<Col xs={12} className="p-0">

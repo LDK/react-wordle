@@ -99,7 +99,7 @@ const GameBoard = (props) => {
 		i++;
 	}
 	return (
-		<Row>
+		<Row className="mt-sm-2 mt-md-0">
 			<Col xs={12}>
 				{ letterRows }
 			</Col>
