@@ -27,7 +27,8 @@ const ScoreBoard = (props) => {
 			i++;
 		}
 		return (
-			<div className="distribution" data-scale={scale}>
+			<div className="distribution d-sm-none d-md-block" data-scale={scale}>
+				<h4>Guess Distribution</h4>
 				{ bars }
 			</div>
 		);
@@ -36,7 +37,6 @@ const ScoreBoard = (props) => {
 		<div className="scoreboard">
 			<p>Words Seen: { scores.words } ({ scores.success } Wins)</p>
 			<p>Average Guesses Needed: { scores.average }</p>
-			<h4>Guess Distribution</h4>
 			<Distribution />
 		</div>
 	);

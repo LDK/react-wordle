@@ -10,7 +10,7 @@ const LetterSquare = (props) => {
 	}
 	return (
 		<Col 
-			className={`letterSquare pt-2 ${result}${activeClass}`} 
+			className={`letterSquare pt-2 pt-sm-0 pt-md-2 ${result}${activeClass}`} 
 			style={{ color: 'white', fontWeight: 600 }}>
 				{ letter || null }
 		</Col>
@@ -99,7 +99,7 @@ const GameBoard = (props) => {
 		i++;
 	}
 	return (
-		<Row className="mt-sm-2 mt-md-0">
+		<Row>
 			<Col xs={12}>
 				{ letterRows }
 			</Col>

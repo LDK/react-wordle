@@ -199,7 +199,7 @@ const App = () => {
 		window.onkeydown=(e) => { handleKeyDown(e.key); };
 	});
 	return (
-		<Container fluid="sm" tabIndex={1} className="h-100 text-center pt-2 pt-sm-5 pt-lg-4 px-0 px-sm-4"> 
+		<Container fluid="sm" tabIndex={1} className="h-100 text-center pt-2 pt-sm-0 pt-md-5 pt-lg-4 px-0 px-sm-4"> 
 			<nav>
 				<span className="button-icon" onClick={() => { setStatsVisible(!statsVisible); }}><StatsIcon /></span>
 				<span className="button-icon" onClick={() => { setHelpVisible(!helpVisible); }}><HelpIcon /></span>
