@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.scss';
+import './scss/App.scss';
 import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import validWords from "./validWords.json";

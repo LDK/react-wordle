@@ -1,0 +1,44 @@
+@mixin opacity-transition {
+	&-exit {
+		opacity: 1;
+		 	transition: opacity 300ms;
+			&-active {
+				opacity: 0;
+			 	transition: opacity 300ms;
+			}
+			&-done {
+				opacity: 0;
+			transition: opacity 300ms;
+			}
+	}
+	&-enter {
+		opacity: 0;
+			&-active {
+				opacity: 1;
+				transition: opacity 300ms;
+			}
+			&-done {
+				opacity: 1;
+				transition: opacity 300ms;
+			}
+	}
+}
+@keyframes goldGlow {
+  from {
+      -webkit-box-shadow: 0px 0px 5px gold;
+         -moz-box-shadow: 0px 0px 5px gold;
+              box-shadow: 0px 0px 5px gold;
+  }
+
+  50% {
+      -webkit-box-shadow: 0px 0px 9px gold;
+         -moz-box-shadow: 0px 0px 9px gold;
+              box-shadow: 0px 0px 9px gold;
+  }
+
+  to {
+      -webkit-box-shadow: 0px 0px 5px gold;
+         -moz-box-shadow: 0px 0px 5px gold;
+              box-shadow: 0px 0px 5px gold;
+  }
+}

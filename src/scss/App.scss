@@ -1,0 +1,99 @@
+@import "bootstrap/scss/functions"; 
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+@import "./vars";
+@import "./nav";
+@import "./StatBox";
+@import "./Keyboard";
+
+html, body {
+	height: 100%;
+}
+* {
+	outline: none;
+}
+body {
+	background: #CBDCEF;
+	#root, #root > div {
+		height: 100%;
+	}
+	.App {
+		max-width: 480px;
+		background-color: #003300;
+		text-align: center;
+		position: relative;
+		.letterSquare {
+			width: 48px;
+			height: 48px;
+			border: 1px solid #ACACAC;
+			background-color: #333;
+			@include media-breakpoint-down(md) {
+				height: 40px;
+				@include media-breakpoint-up(sm) {
+					height: 30px;
+				}
+			}
+			&.wrong-spot {
+				background-color: goldenrod;
+			}
+			&.right-spot {
+				background-color: green;
+			}
+			&.no-spot {
+				background-color: #666;
+			}
+			&.active {
+				border: 1px solid yellow;
+				background: #ACACAC;
+			}
+		}
+		.notification {
+			@include opacity-transition();
+			background: rgb(222,222,222,1);
+			color: #633;
+			opacity: 0;
+			transition: opacity .3s;
+			position: absolute;
+			width: 300px;
+			height: 100px;
+			padding: 2.5rem .5rem;
+			top: calc(50% - 50px);
+			left: calc(50% - 150px);
+			font-weight: 600;
+		}
+	}
+	.result-modal {
+		&.victory {
+			.modal-content {
+				background: green;
+			}
+		}
+		&.failure {
+			.modal-content {
+				background: maroon;
+			}
+		}
+		p, span {
+			color: white;
+		}
+		.result-message {
+			font-weight: 600;
+		}
+		.modal-header {
+			border: none;
+			.btn-close {
+				color: white;
+				opacity: 1;
+			}
+			svg {
+				* {
+					fill: white;
+				}
+			}
+		}
+	}
+	.modal-header span {
+		font-weight: 600;
+	}
+}

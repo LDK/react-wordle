@@ -1,0 +1,40 @@
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: #336;
+	height: 3rem;
+	padding: .5rem;
+	text-align: right;
+	.button-icon {
+		width: 2rem;
+		height: 2rem;
+		cursor: pointer;
+		display: inline-block;
+		margin-right: .75rem;
+		svg {
+			width: 100%;
+			height: 100%;
+			color: rgb(211, 211, 211);
+		}
+		&:hover svg {
+			color: white;
+		}
+	}
+	@include media-breakpoint-down(md) {
+		@include media-breakpoint-up(sm) {
+			width: 3rem;
+			height: 100%;
+			background: unset;
+			left: unset;
+			right: 0;
+			.button-icon {
+				margin-bottom: 1rem;
+				svg {
+					color: rgb(13, 13, 13);
+				}
+			}
+		}			
+	}
+}

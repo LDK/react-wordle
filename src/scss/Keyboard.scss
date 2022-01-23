@@ -1,0 +1,65 @@
+.onscreenKeyboard {
+	.keyButton {
+		background-color: #DEDEDE;
+		cursor: pointer;
+		min-width: 1.25rem;
+		margin-left: 4px;
+		margin-right: 4px;
+		@media (min-width: 353px) {
+			min-width: 1.35rem;
+		}
+		@media (min-width: 360px) {
+			min-width: 1.4rem;
+			margin-left: 4px;
+			margin-right: 4px;
+		}
+		@media (min-width: 380px) {
+			min-width: 1.5rem;
+		}
+		@media (min-width: 400px) {
+			min-width: 1.625rem;
+		}
+		@media (min-width: 420px) {
+			min-width: 1.75rem;
+		}
+		@media (min-width: 460px) {
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+		@media (min-width: 480px) {
+			margin-left: 6px;
+			margin-right: 6px;
+		}
+		@media (min-width: 576px) {
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+		@media (max-width: 338px) {
+			margin-left: 3px;
+			margin-right: 3px;
+		}
+		&[data-result="right"] {
+			background-color: green;
+		}
+		&[data-result="wrong"] {
+			background-color: goldenrod;
+		}
+		&[data-result="none"] {
+			background-color: #666;
+		}
+		&.actionKey {
+			background: rgb(90,200,210);
+		}
+		&.attention {
+		    border: 1px solid gold !important; /* some kind of blue border */
+			background: green !important;
+			color: white !important;
+		    -webkit-box-shadow: 0px 0px 6px gold;
+		       -moz-box-shadow: 0px 0px 6px gold;
+		            box-shadow: 0px 0px 6px gold;
+		    animation-duration: 2s;
+		    animation-name: goldGlow;
+		    animation-iteration-count: infinite;
+		}
+	}
+}

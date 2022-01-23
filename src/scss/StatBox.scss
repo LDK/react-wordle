@@ -1,0 +1,76 @@
+.stats {
+	background: white;
+	padding: 0;
+	.scoreboard {
+		h4 {
+			margin-bottom: 1rem;
+		}
+		.distribution {
+			&-1 {
+				background-color: #00ff00;
+			}
+			&-2 {
+				background-color: #91df00;
+			}
+			&-3 {
+				background-color: #c4ba00;
+			}
+			&-4 {
+				background-color: #e59100;
+			}
+			&-5 {
+				background-color: #f96000;
+			}
+			&-6 {
+				background-color: #ff0000;
+			}
+			&-bar {
+				height: 28px;
+				position: relative;
+				top: 1px;
+				left: calc(1px);
+				padding-left: 4px;
+				font-weight: 600;
+				span {
+					position: absolute;
+					left: .5rem;
+				}
+				&-tray {
+					height: 30px;
+					background: #999;
+					width: 100%;
+					margin-bottom: .5rem;
+					position: relative;
+					left: 1.5rem;
+					max-width: calc(100% - 3rem);
+					&::before {
+						display: inline-block;
+						position: absolute;
+						left: -1.5rem;
+						color: black;
+						font-weight: 600;
+						top: 1px;
+					}
+					&[rel="1"]::before {
+						content: '1: ';
+					}
+					&[rel="2"]::before {
+						content: '2: ';
+					}
+					&[rel="3"]::before {
+						content: '3: ';
+					}
+					&[rel="4"]::before {
+						content: '4: ';
+					}
+					&[rel="5"]::before {
+						content: '5: ';
+					}
+					&[rel="6"]::before {
+						content: '6: ';
+					}
+				}
+			}
+		}
+	}
+}
