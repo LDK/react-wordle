@@ -31,7 +31,7 @@ const ResultMessage = (props) => {
 			<Modal.Body>
 				<p className="result-message px-2 py-4 text-center fw-600 m-0">
 					{ resultMessage }
-					{ isMobile && <Button onClick={newGame} variant="primary" value="New Word" /> }
+					{ isMobile && <Button onClick={newGame} variant="primary">New Word</Button> }
 				</p>
 			</Modal.Body>
 		</Modal>
