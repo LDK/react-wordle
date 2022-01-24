@@ -8,4 +8,6 @@ Once the game is loaded (playable [here](http://wordle.electric-bungalow.com)), 
 
 The on-screen keyboard's background colors will update to correspond with the results of the guess.  Unlike the original game, once a word is either successfully guessed, or failed after 6 tries, you can press Enter to get a new word.
 
-For the general rules of Wordle, check the original site linked above.
+For the general rules of Wordle, check the original site linked above, or click the "?" icon on the top right of this app.
+
+To view your player stats, click the bar-graph icon on the top right of this app.
